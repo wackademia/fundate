@@ -39,6 +39,11 @@ function buildTimeSlots() {
 const TIME_SLOTS = buildTimeSlots();
 const ACTIVITY_CHIPS = ['Dinner 🍝', 'Movie 🎬', 'Coffee ☕', 'Walk in the park 🌳', 'Surprise me ✨'];
 
+function chipLabelToValue(label: string) {
+  const parts = label.trim().split(' ');
+  return parts.length > 1 ? parts.slice(0, -1).join(' ') : label.trim();
+}
+
 function useConfetti() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const particlesRef = useRef<any[]>([]);
@@ -299,7 +304,7 @@ function ActivityStep({
       <p className="subtitle">Tell me the plan</p>
       <div className="chips">
         {ACTIVITY_CHIPS.map((c) => (
-          <button key={c} className="chip" onClick={() => onChange(c.replace(/\s[\p{Emoji}]$/u, '').trim())}>{c}</button>
+          <button key={c} className="chip" onClick={() => onChange(chipLabelToValue(c))}>{c}</button>
         ))}
       </div>
       <textarea
